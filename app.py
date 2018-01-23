@@ -91,18 +91,7 @@ def get_tweet(tweet_id):
 		where tweet.parent_id = {}
 		order by tweet.created_at asc'''.format(tweet_id))
 
-	response['replies'] = []
-	for reply in replies:
-		tweet_data = {}
-		tweet_data['id'] = reply.id
-		tweet_data['body'] = reply.body
-		tweet_data['author'] = reply.username
-		tweet_data['created_at'] = reply.created_at
-		tweet_data['number_replies'] = reply.number_replies
-		tweet_data['number_retweets'] = reply.number_retweets
-		tweet_data['number_likes'] = reply.number_likes
-		tweet_data['parent_id'] = reply.parent_id
-		response['replies'].append(tweet_data)
+	response['replies'] = serialize(replies)
 
 	return jsonify({'tweet' : response}), 200
 
